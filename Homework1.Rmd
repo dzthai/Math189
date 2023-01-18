@@ -1,0 +1,56 @@
+---
+title: "Math 189 HW 1"
+Author: David Thai, Shir Levin, Stanley Park
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+Authors: David Thai, Shir Levin, Stanley Park. 
+
+Math 189 Section B
+```{r}
+cars <- read.csv("mtcars.csv")
+cars
+```
+
+1. Calculate Sample mean and Variance
+```{r}
+cars <- subset(cars, select= -c(model))
+#View(cars)
+colMeans(cars)
+sapply(cars, var)
+```
+
+2. The diagonaol of the variance matrix is the variances of each variable. The diagonals of the corrleation matrix is 1. They are also both symmetric.
+```{r}
+cov(cars)
+cor(cars)
+```
+3. Scatterplot between Wt and Mpg
+```{r}
+plot(cars$wt, cars$mpg)
+```
+
+
+4. Drawing 3D scatterplot using columns of mtcars
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+```
+```{r}
+#scatterplot3d(x = cars$mpg, y=cars$wt, z=cars$cyl)
+#plot_ly(x=cars$mpg, y=cars$wt, z=cars$cyl, type="scatter3d", mode="markers", color=cars$cyl)
+#lot3d(cars$wt, cars$disp, cars$mpg, type = "s", size = 0.75, lit = FALSE)
+cars |> 
+  ggplot(aes(mpg, wt)) + geom_point(alpha=0.5, size=2, aes(color=cyl))
+```
+
+5. Pairwise scatterplot
+```{r}
+pairs(cars)
+```
+
+6. Yes it looks like cylinders has an impact on the relationship between weight and MPG. The lighter the shade of blue of an observation , the more cylinders it has. From the scatterplot in 4, we can clearly see that there is a linear relationship between the shades of blue and points with similar weight and MPG. Cars with lower weight and mpg have lighter shades of blue than those with heavier weights and higher mpg.
+
